@@ -14,10 +14,21 @@ const crypt = require('../../config/encrypt.js');
 const connection = mysql.createConnection(db);
 
 //Return object with info on user
-const accessInfo = function(username, password, callback) {
-    connection.query(`SELECT user.*, status_name FROM user JOIN status ON user.status_id = status.status_id WHERE user_password = '${crypt(password)}' and user_name = '${username}'`, function(err, result) {
-        if (err) return callback(err);
-        return callback(null, result);
+const accessInfo = function(username, password) {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT user.*, status_name FROM user JOIN status ON user.status_id = status.status_id WHERE user_password = '${crypt(password)}' and user_name = '${username}'`, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
+};
+
+const authenticateUser = function(username, password) {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT user.*, status_name FROM user JOIN status ON user.status_id = status.status_id WHERE user_password = '${crypt(password)}' and user_name = '${username}'`, (err, result) => {
+            if (err || result[0].length == 0) reject(err);
+            else resolve(result[0].user_id);
+        });
     });
 };
 
@@ -25,30 +36,17 @@ const accessInfo = function(username, password, callback) {
 
 //GET
 //Public
-router.get('/', function (req, res) {
+router.get('/', function (req, res, next) {
+    console.log(req.session);
     res.send('get');
 });
 
 //POST
 //Authenticate username and password
 //Public
-router.post('/', function (req, res) {
-    if (req.body.username && req.body.password) {
-        console.log('sent');
-        accessInfo(req.body.username, req.body.password, (err, result) => {
-            if (err) throw err;
-            else if (result.length == 0) {
-                console.log('login failed');
-                return null;
-            } else {
-                let user = result;
-                console.log('login successful');
-                req.session.userID = (user[0].user_id);
-                console.log(req.session.userID);
-            }
-        })
-        res.send('success');
-    }
-})
+router.post('/', async (req, res) => {
+    req.session.userID = await authenticateUser(req.body.username, req.body.password)
+    res.send(req.session);
+});
 
 module.exports = router;

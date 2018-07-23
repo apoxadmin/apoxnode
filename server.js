@@ -20,7 +20,10 @@ connection.connect((err) => {
 app.use(session({
     secret: 'apoucla',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60000
+    }
 }));
 
 //Bodyparser middleware
@@ -31,16 +34,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 const login = require('./routes/api/login');
 app.use('/login', login);
 
-//Passport middleware
-//app.use(passport.initialize());
-//app.use(passport.session());
-
 app.get('/', function (req, res) {
-    res.send('hello world')
+    console.log(req.session);
+    res.send('hello world');
 })
 
 app.post('/', function (req, res) {
-    res.send('POST request to the homepage')
+    res.send('POST request to the homepage');
 })
 
 const port = process.env.PORT || 5000;
