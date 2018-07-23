@@ -1,6 +1,6 @@
 # APO-X node.js website
 Hello friends! After what feels like a decade running our site on PHP, and then WordPress, we're updating our tech by starting work on a new site built on node.js. We would appreciate any help! Check out the projects board for this repository to see where we're going, which we'll start updating soon!
-#Coming Soon!
+# Coming Soon!
 So an important thing we need to include is demo databases that anyone can set up in order to model working with the old databases. Coming to a repository near you:
 (possibly more columns and tables that I missed sorry)
 ### action
