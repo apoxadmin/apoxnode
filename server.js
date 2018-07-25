@@ -34,6 +34,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 const login = require('./routes/api/login');
 app.use('/login', login);
 
+const logout = require('./routes/api/logout');
+app.use('/logout', logout);
+
 app.get('/', function (req, res) {
     console.log(req.session);
     res.send('hello world');
