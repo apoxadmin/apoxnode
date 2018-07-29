@@ -30,13 +30,17 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-//Routes
+//Imported Routes
 const login = require('./routes/api/login');
 app.use('/login', login);
 
 const logout = require('./routes/api/logout');
 app.use('/logout', logout);
 
+const event = require('./routes/api/event/show');
+app.use('/event', event);
+
+//Routes
 app.get('/', function (req, res) {
     console.log(req.session);
     res.send('hello world');
