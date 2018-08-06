@@ -40,15 +40,14 @@ app.use('/logout', logout);
 const event = require('./routes/api/event/show');
 app.use('/event', event);
 
+const eventSignUp = require('./routes/api/event/signup');
+app.use('/event', eventSignUp);
+
 //Routes
 app.get('/', function (req, res) {
     console.log(req.session);
     res.send('hello world');
-})
-
-app.post('/', function (req, res) {
-    res.send('POST request to the homepage');
-})
+});
 
 const port = process.env.PORT || 5000;
 
