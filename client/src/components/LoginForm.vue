@@ -32,7 +32,7 @@ export default {
         })
         .then(response => {
           console.log(response);
-          this.info = response.data.cookie;
+          this.info = response.data;
         })
         .catch(function(error) {
           console.log(error);
