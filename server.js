@@ -30,6 +30,13 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+//CORS
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });  
+
 //Imported Routes
 const login = require('./routes/api/login');
 app.use('/login', login);
