@@ -46,6 +46,7 @@ router.get('/', function (req, res, next) {
 //Public
 router.post('/', async (req, res) => {
     req.session.userID = await authenticateUser(req.body.username, req.body.password).catch(() => null);
+    
     res.send(req.session);
 });
 

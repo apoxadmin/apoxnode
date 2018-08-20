@@ -26,7 +26,7 @@ export default {
     submitLogin: function(e) {
       e.preventDefault();
       this.$axios
-        .post("http://localhost:5000/login", {
+        .post("/login", {
           username: this.login.username,
           password: this.login.password
         })
