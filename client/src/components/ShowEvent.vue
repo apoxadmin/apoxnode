@@ -1,16 +1,50 @@
 <template>
     <div class="showEvent">
-        <button v-on:click="checkEvent">x</button>
         <p>{{ info }}</p>
         <p>{{ $route.params.eventID }}</p>
-        <table>
+        <div class="eventTable">
+          <table>
             <tr>
-                <th>{{ info[0]["event_name"] }}</th>
+              <th>Event Information</th>
             </tr>
             <tr>
-                <td>{{ info[0]["event_description"] }}</td>
+              <th>Name</th>
+              <td>{{ info[0]["event_name"] }}</td>
             </tr>
-        </table>
+            <tr>
+              <th>Type</th>
+              <td>{{ info[0]["eventtype_id"] }}</td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <td>{{ info[0]["event_date"] }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ info[0]["event_date"] }} - {{ info[0]["event_enddate"] }}</td>
+              </tr>
+            <tr>
+              <th>Location</th>
+              <td>{{ info[0]["event_name"] }}</td>
+            </tr>
+            <tr>
+              <th>Shifts</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td>{{ info[0]["event_description"] }}</td>
+            </tr>
+            <tr>
+              <th>Event Contact</th>
+              <td>{{ info[0]["event_contact"] }}</td>
+            </tr>
+            <tr>
+              <th>Show Emails</th>
+              <td></td>
+            </tr>
+          </table>
+        </div>
     </div>
 </template>
 
@@ -23,10 +57,10 @@ export default {
       info: "no info"
     };
   },
-  methods: {
-    checkEvent: function(e) {
-      e.preventDefault();
-      this.$axios
+  methods: {},
+  computed: {},
+  mounted() {
+    this.$axios
         .get(`/event/${this.$route.params.eventID}`)
         .then(response => {
           console.log(response);
@@ -35,8 +69,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    }
-  },
-  computed: {}
+  }
 };
 </script>
