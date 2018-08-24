@@ -18,7 +18,7 @@ const eventInfo = function(eventID) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT event.* FROM event WHERE event_id = '${eventID}'`, (err, result) => {
             if (err ||  result[0].length == 0) reject (err);
-            else resolve(result);
+            else resolve(result[0]);
         });
     });
 };
@@ -38,7 +38,7 @@ const signupList = function(shiftID) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT signup.* FROM signup WHERE shift_id = '${shiftID}'`, (err, result) => {
             if (err) reject (err);
-            else resolve(result);
+            else resolve(result[0]);
         });
     });
 };
@@ -67,10 +67,13 @@ router.get('/:eventID', async (req, res, next) => {
         for (let i = 0; i < shift.length; i++) {
             await signedUp.push(await signupList(shift[i].shift_id));
         };
-        console.log(shift);
-        console.log(comments);
-        console.log(signedUp);
-        res.send(result);
+        let allEventInfo = {
+            event: result,
+            shifts: shift,
+            comments: comments,
+            signUpList: signedUp
+        };
+        res.send(allEventInfo);
     } else {
         res.send('Sorry, you must be logged in to access.');
     }
