@@ -2,6 +2,7 @@
     <div class="showEvent">
         <p>{{ info }}</p>
         <p>{{ $route.params.eventID }}</p>
+        <button @click="test">x</button>
         <div class="eventTable">
           <table>
             <tr>
@@ -62,8 +63,18 @@ export default {
       }
     };
   },
-  methods: {},
-  computed: {},
+  methods: {
+    test() {
+      this.$store.dispatch("getEvent", {
+        eventID: this.$route.params.eventID
+      });
+    }
+  },
+  computed: {
+    information () {
+      return this.$store.state.event;
+    }
+  },
   mounted() {
     this.$axios
       .get(`/event/${this.$route.params.eventID}`)
