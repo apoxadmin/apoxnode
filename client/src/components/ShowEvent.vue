@@ -2,7 +2,6 @@
     <div class="showEvent">
         <p>{{ info }}</p>
         <p>{{ $route.params.eventID }}</p>
-        <button @click="test">x</button>
         <div class="eventTable">
           <table>
             <tr>
@@ -53,37 +52,17 @@
 export default {
   name: "ShowEvent",
   data: function() {
-    return {
-      login: {},
-      info: {
-        "event": "no info",
-        "shifts": "no info",
-        "comments": "no info",
-        "signUpList": "no info"
-      }
-    };
+    return {};
   },
-  methods: {
-    test() {
-      this.$store.dispatch("getEvent", {
-        eventID: this.$route.params.eventID
-      });
-    }
-  },
+  methods: {},
   computed: {
-    information () {
+    info () {
       return this.$store.state.event;
     }
   },
   mounted() {
-    this.$axios
-      .get(`/event/${this.$route.params.eventID}`)
-      .then(response => {
-        console.log(response);
-        this.info = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
+    this.$store.dispatch("getEvent", {
+        eventID: this.$route.params.eventID
       });
   }
 };

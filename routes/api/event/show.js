@@ -17,7 +17,7 @@ const connection = mysql.createConnection(db);
 const eventInfo = function(eventID) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT event.* FROM event WHERE event_id = '${eventID}'`, (err, result) => {
-            if (err ||  result[0].length == 0) reject (err);
+            if (err || !result[0]) reject (err);
             else resolve(result[0]);
         });
     });
@@ -27,7 +27,7 @@ const eventInfo = function(eventID) {
 const matchShift = function(eventID) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT shift.* FROM shift WHERE event_id = '${eventID}'`, (err, result) => {
-            if (err ||  result[0].length == 0) reject (err);
+            if (err || !result[0]) reject (err);
             else resolve(result);
         });
     });
