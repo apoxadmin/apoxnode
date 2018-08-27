@@ -1,0 +1,1 @@
+//work in progress for chairs to send in detailed information about the event and the attendees

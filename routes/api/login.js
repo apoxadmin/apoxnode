@@ -34,19 +34,11 @@ const authenticateUser = function(username, password) {
 
 //Middleware
 
-//GET
-//Public
-router.get('/', function (req, res, next) {
-    console.log(req.session);
-    res.send('get');
-});
-
 //POST
 //Authenticate username and password
 //Public
 router.post('/', async (req, res) => {
     req.session.userID = await authenticateUser(req.body.username, req.body.password).catch(() => null);
-    
     res.send(req.session);
 });
 

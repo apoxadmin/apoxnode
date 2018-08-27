@@ -1,32 +1,39 @@
 <template>
     <div class="signUp">
         <div class="signUpList">
-            <p>This is the sign up list</p>
+            <p>This is the sign up</p>
+            <table v-for="shift in shifts" v-bind:key="shift.shift_id">
+              <tr>
+                <th>Shift {{ shift.shift_start }} - {{shift.shift_end }} (Cap: {{ shift.shift_capacity }}) {{ shift.shift_name }}</th>
+              </tr>
+              <ShiftList
+                :shift = "shift.shift_id"
+              ></ShiftList>
+            </table>
         </div>
     </div>
 </template>
 
 <script>
+import ShiftList from "@/components/ShiftList.vue";
+
 export default {
   name: "SignUp",
+  components: {
+    ShiftList
+  },
   data: function() {
-    return {
-      login: {},
-      info: "no info"
-    };
+    return {};
   },
   methods: {},
-  computed: {},
-  mounted() {
-    this.$axios
-      .get(`/event/${this.$route.params.eventID}`)
-      .then(response => {
-        console.log(response);
-        this.info = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+  computed: {
+    shifts() {
+      return this.$store.state.event.shifts;
+    },
+    list() {
+      return this.$store.state.event.signUpList;
+    }
+  },
+  mounted() {}
 };
 </script>

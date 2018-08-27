@@ -8,6 +8,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm run serve --prefix client",
+    "lint": "npm run lint --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {

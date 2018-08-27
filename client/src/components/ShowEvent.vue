@@ -29,7 +29,9 @@
             </tr>
             <tr>
               <th>Shifts</th>
-              <td></td>
+              <td>
+                <span v-for="shift in info['shifts']" v-bind:key="shift.shift_id">{{ shift.shift_start }} - {{ shift.shift_end }}<br/></span>
+              </td>
             </tr>
             <tr>
               <th>Description</th>
@@ -56,14 +58,14 @@ export default {
   },
   methods: {},
   computed: {
-    info () {
+    info() {
       return this.$store.state.event;
     }
   },
   mounted() {
     this.$store.dispatch("getEvent", {
-        eventID: this.$route.params.eventID
-      });
+      eventID: this.$route.params.eventID
+    });
   }
 };
 </script>

@@ -76,4 +76,20 @@ router.get('/:eventID', async (req, res, next) => {
     }
 });
 
+//POST
+//Signs up for an event
+//Only logged in
+
+//POST
+//Admin signs up for an event
+//Only Admin
+
+//DELETE
+//Removes someone from an event
+//Only logged in
+
+//DELETE
+//Admin removes someone from an event
+//Only Admin
+
 module.exports = router;
