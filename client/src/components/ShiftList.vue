@@ -5,10 +5,10 @@
       <!--for loop of table header cells
       for each of the items in the header array
       print out a th with the event field-->
-      //eslint-disable-next-line
+// eslint-disable-next-line
       <span v-for="brother in list" v-if="brother.shift_id == shift">
         <tr>
-          //eslint-disable-next-line
+// eslint-disable-next-line
           <span v-for="field in brother">
             <!--omit the user-->
             <td>{{ field }}</td>
