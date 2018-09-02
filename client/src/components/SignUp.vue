@@ -2,7 +2,7 @@
     <div class="signUp">
         <div class="signUpList">
             <p>This is the sign up</p>
-            <table v-for="shift in shifts" v-bind:key="shift.shift_id">
+            <table v-for="shift in shifts" v-bind:key="shift.shift_id" class="table">
               <tr>
                 <th>Shift {{ shift.shift_start }} - {{shift.shift_end }} (Cap: {{ shift.shift_capacity }}) {{ shift.shift_name }}</th>
               </tr>

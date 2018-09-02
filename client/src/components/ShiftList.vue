@@ -1,24 +1,19 @@
 <template>
-    <div class="shiftList">
-      {{ shift }}
-      <br />
+    <tbody class="shiftList">
+      <th>Name</th>
+      <th>Chair</th>
+      <th>Driving</th>
+      <th>Needs Ride</th>
       <!--for loop of table header cells
       for each of the items in the header array
       print out a th with the event field-->
-// eslint-disable-next-line
-      <span v-for="brother in list" v-if="brother.shift_id == shift">
-        <tr>
-// eslint-disable-next-line
-          <span v-for="field in brother">
+        <tr v-for="brother in list" v-if="brother.shift_id == shift">
             <!--omit the user-->
-            <td>{{ field }}</td>
+            <td v-for="field in brother">{{ field }}</td>
             <!--edit the fields so that they match the proper context-->
-          </span>
         </tr>
-        <br/>
         <!--create a row for the user so they can add or take themselves off the event-->
-      </span>
-    </div>
+    </tbody>
 </template>
 
 <script>

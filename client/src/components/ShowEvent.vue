@@ -2,7 +2,7 @@
     <div class="showEvent">
         <p>{{ info }}</p>
         <p>{{ $route.params.eventID }}</p>
-        <div class="eventTable">
+        <div class="eventTable table">
           <table>
             <tr>
               <th>Event Information</th>
@@ -13,7 +13,7 @@
             </tr>
             <tr>
               <th>Type</th>
-              <td>{{ info["event"]["eventtype_id"] }}</td>
+              <td>{{ info["event"]["eventtype_name"] }}</td>
             </tr>
             <tr>
               <th>Date</th>

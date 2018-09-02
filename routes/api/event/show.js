@@ -16,7 +16,7 @@ const connection = mysql.createConnection(db);
 //Return object with info on event
 const eventInfo = function(eventID) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT event.* FROM event WHERE event_id = '${eventID}'`, (err, result) => {
+        connection.query(`SELECT event.*, eventtype_name FROM event JOIN eventtype ON event.eventtype_id = eventtype.eventtype_id WHERE event_id = '${eventID}'`, (err, result) => {
             if (err || !result[0]) reject (err);
             else resolve(result[0]);
         });
@@ -36,7 +36,7 @@ const matchShift = function(eventID) {
 //Show list of people signed up 
 const signupList = function(shiftID) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT signup.* FROM signup WHERE shift_id = '${shiftID}'`, (err, result) => {
+        connection.query(`SELECT signup.*, user_name FROM signup JOIN user ON signup.user_id = user.user_id WHERE shift_id = '${shiftID}'`, (err, result) => {
             if (err) reject (err);
             else resolve(result[0]);
         });
