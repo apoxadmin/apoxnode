@@ -36,7 +36,7 @@ const matchShift = function(eventID) {
 //Show list of people signed up 
 const signupList = function(shiftID) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT signup.*, user_name FROM signup JOIN user ON signup.user_id = user.user_id WHERE shift_id = '${shiftID}'`, (err, result) => {
+        connection.query(`SELECT signup.*, user_name, user_email FROM signup JOIN user ON signup.user_id = user.user_id WHERE shift_id = '${shiftID}' ORDER by signup_order`, (err, result) => {
             if (err) reject (err);
             else resolve(result[0]);
         });

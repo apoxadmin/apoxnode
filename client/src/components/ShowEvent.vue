@@ -5,7 +5,7 @@
         <div class="eventTable table">
           <table>
             <tr>
-              <th>Event Information</th>
+              <th colspan="2">Event Information</th>
             </tr>
             <tr>
               <th>Name</th>
@@ -17,11 +17,11 @@
             </tr>
             <tr>
               <th>Date</th>
-              <td>{{ info["event"]["event_date"] }}</td>
+              <td>{{ eventDate["event_date"].getMonth() + 1 }}/{{ eventDate["event_date"].getDate() }}</td>
             </tr>
             <tr>
               <th>Time</th>
-              <td>{{ info["event"]["event_date"] }} - {{ info["event"]["event_enddate"] }}</td>
+              <td>{{ eventDate["event_date"].getHours() }}:{{ zeroMinutes(eventDate["event_date"].getMinutes()) }}{{ eventDate["event_date"].getMinutes() }} - {{ eventDate["event_enddate"].getHours() }}:{{ zeroMinutes(eventDate["event_enddate"].getMinutes()) }}{{ eventDate["event_enddate"].getMinutes() }}</td>
             </tr>
             <tr>
               <th>Location</th>
@@ -56,10 +56,26 @@ export default {
   data: function() {
     return {};
   },
-  methods: {},
+  methods: {
+    zeroMinutes(minutes) {
+      if (minutes < 10) {
+        return 0;
+      } else {
+        return null;
+      }
+    }
+  },
   computed: {
     info() {
       return this.$store.state.event;
+    },
+    eventDate() {
+      let event_date = new Date(this["info"]["event"]["event_date"]);
+      let event_enddate = new Date(this["info"]["event"]["event_enddate"]);
+      return {
+        event_date: event_date,
+        event_enddate: event_enddate
+      };
     }
   },
   mounted() {
