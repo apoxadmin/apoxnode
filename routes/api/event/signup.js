@@ -55,8 +55,8 @@ const showComments = function(eventID) {
 
 //Middleware
 
-//GET
-//Return info on an event
+//POST
+//Signs up for an event
 //Only logged in
 router.get('/:eventID', async (req, res, next) => {
     if (req.session.userID) {
@@ -75,10 +75,6 @@ router.get('/:eventID', async (req, res, next) => {
         res.send('Sorry, you must be logged in to access.');
     }
 });
-
-//POST
-//Signs up for an event
-//Only logged in
 
 //POST
 //Admin signs up for an event

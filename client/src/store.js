@@ -7,15 +7,22 @@ Vue.use(axios);
 
 export default new Vuex.Store({
   state: {
+    login: {},
     event: {}
   },
   getters: {},
   mutations: {
+    loginInfo(state, loginCookie) {
+      state.login = loginCookie;
+    },
     getEvent(state, eventResponse) {
       state.event = eventResponse;
     }
   },
   actions: {
+    loginInfo(context, payload) {
+      context.commit("loginInfo", payload);
+    },
     getEvent(context, payload) {
       axios
         .get(`/event/${payload.eventID}`)

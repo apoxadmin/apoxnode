@@ -25,7 +25,7 @@
             </tr>
             <tr>
               <th>Location</th>
-              <td>{{ info["event"]["event_name"] }}</td>
+              <td>{{ info["event"]["event_location"] }}</td>
             </tr>
             <tr>
               <th>Shifts</th>
@@ -43,7 +43,9 @@
             </tr> 
             <tr>
               <th>Show Emails</th>
-              <td></td>
+              <td>
+                <span v-for="brother in info.signUpList">{{ brother.user_email }} </span>
+              </td>
             </tr>
           </table>
         </div>

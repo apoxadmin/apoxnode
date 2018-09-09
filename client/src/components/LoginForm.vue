@@ -9,7 +9,7 @@
               <br />
               <button v-on:click="submitLogin" type="submit">Login</button>
           </form>
-          <p>{{ info }}</p>
+          <p>{{ loginInfo }}</p>
         </div>
 </template>
 
@@ -19,7 +19,6 @@ export default {
   data: function() {
     return {
       login: {},
-      info: "no info"
     };
   },
   methods: {
@@ -31,14 +30,17 @@ export default {
           password: this.login.password
         })
         .then(response => {
-          console.log(response);
-          this.info = response.data;
+          this.$store.dispatch("loginInfo", response.data);
         })
         .catch(function(error) {
           console.log(error);
         });
     }
   },
-  computed: {}
+  computed: {
+    loginInfo() {
+      return this.$store.state.login;
+    }
+  }
 };
 </script>
