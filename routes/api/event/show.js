@@ -38,7 +38,7 @@ const signupList = function(shiftID) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT signup.*, user_name, user_email FROM signup JOIN user ON signup.user_id = user.user_id WHERE shift_id = '${shiftID}' ORDER by signup_order`, (err, result) => {
             if (err) reject (err);
-            else resolve(result[0]);
+            else resolve(result);
         });
     });
 };
