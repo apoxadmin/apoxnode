@@ -43,6 +43,9 @@ app.use('/event', event);
 const eventSignUp = require('./routes/api/event/signup');
 app.use('/event', eventSignUp);
 
+const eventAdd = require('./routes/api/event/add');
+app.use('/eventeditor', eventAdd);
+
 //Routes
 app.get('/', function (req, res) {
     console.log(req.session);

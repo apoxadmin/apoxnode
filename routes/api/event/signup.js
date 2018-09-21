@@ -33,10 +33,30 @@ const lastSignup = function(shiftID) {
     });
 };
 
-//Inserting a new participant into an event
+//Deleting a participant from an event
 const unSignUp = function(user_id, shift_id) {
     return new Promise((resolve, reject) => {
         connection.query(`DELETE FROM signup WHERE user_id = '${user_id}' AND shift_id = '${shift_id}'`, (err, result) => {
+            if (err) reject (err);
+            else resolve(result);
+        });
+    });
+}
+
+//Editing signup info
+const editSignUp = function(user_id, shift_id, signup_driving, signup_chair, signup_ride, signup_custom1, signup_custom2, signup_custom3, signup_custom4, signup_custom5) {
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE signup SET signup_driving = '${signup_driving}', signup_chair = '${signup_chair}', signup_ride = '${signup_ride}', signup_custom1 = '${signup_custom1}', signup_custom2 = '${signup_custom2}', signup_custom3 = '${signup_custom3}', signup_custom4 = '${signup_custom4}', signup_custom5 = '${signup_custom5}' WHERE user_id = '${user_id}' AND shift_id = '${shift_id}'`, (err, result) => {
+            if (err) reject (err);
+            else resolve(result);
+        });
+    });
+}
+
+//Editing signup info without editing chair
+const editSignUpNoChair = function(user_id, shift_id, signup_driving, signup_ride, signup_custom1, signup_custom2, signup_custom3, signup_custom4, signup_custom5) {
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE signup SET signup_driving = '${signup_driving}', signup_ride = '${signup_ride}', signup_custom1 = '${signup_custom1}', signup_custom2 = '${signup_custom2}', signup_custom3 = '${signup_custom3}', signup_custom4 = '${signup_custom4}', signup_custom5 = '${signup_custom5}' WHERE user_id = '${user_id}' AND shift_id = '${shift_id}'`, (err, result) => {
             if (err) reject (err);
             else resolve(result);
         });
@@ -58,19 +78,19 @@ router.post('/:eventID/:shiftID', async (req, res, next) => {
         await signUp(req.session.userID, shiftID, signUpOrder, req.body.driving, req.body.chair, req.body.ride, req.body.signup_custom1, req.body.signup_custom2, req.body.signup_custom3, req.body.signup_custom4, req.body.signup_custom5, signUpTime);
         res.send('Signed up!');
     } else {
-        res.send('Sorry, you must be logged in to access.');
+        next();
     }
 });
 
 //POST
 //Admin signs up for an event
-//Only Admin
+//Only EXCOMM
 router.post('/:eventID/:shiftID', async (req, res, next) => {
     if (req.session.userStatus == "Administrator") {
         let shiftID = await req.params.shiftID;
         let signUpOrder = await lastSignup(shiftID);
         signUpOrder = await signUpOrder[0]["MIN(signup_order)"];
-        signUpOrder = signUpOrder - 1;
+        signUpOrder = await signUpOrder - 1;
         let signUpTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
         await signUp(req.body.userID, shiftID, signUpOrder, req.body.driving, req.body.chair, req.body.ride, req.body.signup_custom1, req.body.signup_custom2, req.body.signup_custom3, req.body.signup_custom4, req.body.signup_custom5, signUpTime);
         res.send('Signed up!');
@@ -88,18 +108,32 @@ router.delete('/:eventID/:shiftID', async (req, res, next) => {
         await unSignUp(req.session.userID, shiftID);
         res.send('Off the list!');
     } else {
-        res.send('Sorry, you must be logged in to access.');
+        next();
     }
 });
 
 //DELETE
 //Admin removes someone from an event
-//Only Admin
+//Only EXCOMM
 router.delete('/:eventID/:shiftID', async (req, res, next) => {
     if (req.session.userStatus == "Administrator") {
         let shiftID = await req.params.shiftID;
         await unSignUp(req.body.userID, shiftID);
         res.send('Off the list!');
+    } else {
+        res.send('Sorry, you must be logged in to access.');
+    }
+});
+
+//PUT
+//Edit signup info
+//Only logged in
+router.post('/:eventID/:shiftID', async (req, res, next) => {
+    if (req.session.userStatus == "Active" || req.session.userStatus == "Pledge" || req.session.userStatus == "Associate" || req.session.userStatus == "Alumni") {
+        //need to add case for not changing chair
+        let shiftID = await req.params.shiftID;
+        await editSignUp(req.session.userID, shiftID, req.body.signup_driving, req.body.signup_chair, req.body.signup_ride, req.body.signup_custom1, req.body.signup_custom2, req.body.signup_custom3, req.body.signup_custom4, req.body.signup_custom5);
+        res.send('Changes saved!');
     } else {
         res.send('Sorry, you must be logged in to access.');
     }
